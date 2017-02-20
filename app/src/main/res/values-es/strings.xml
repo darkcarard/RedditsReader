@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Configuración:</string>
+    <string name="button_label">IR</string>
+    <string name="category_label">Categoría:</string>
+    <string name="created_label">Creado:</string>
+    <string name="language_label">Idioma:</string>
+    <string name="reddit_subscribers_label">suscriptores</string>
+    <string name="suscribers_label">Suscriptores:</string>
+</resources>

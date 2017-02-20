@@ -23,7 +23,15 @@
         <activity
             android:name=".RedditDetailActivity"
             android:label="@string/title_activity_reddit_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".RedditListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".RedditListActivity" />
+        </activity>
     </application>
 
 </manifest>

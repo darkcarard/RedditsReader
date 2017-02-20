@@ -1,8 +1,10 @@
 package com.test.darkcarard.rlist;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -128,49 +130,62 @@ public class RedditListActivityFragment extends Fragment {
 
         @Override
         protected Reddit[] doInBackground(Void... params) {
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
             String redditJsonString = null;
-            try {
-                final String REDDIT_BASE_URL = "https://www.reddit.com/subreddits.json";
+            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            boolean offlineMode = sharedPrefs.getBoolean(getString(R.string.pref_offlineMode_key), false);
+            if (!offlineMode) {
+                HttpURLConnection urlConnection = null;
+                BufferedReader reader = null;
+                redditJsonString = null;
+                try {
+                    final String REDDIT_BASE_URL = "https://www.reddit.com/subreddits.json";
 
-                Uri builtUri = Uri.parse(REDDIT_BASE_URL).buildUpon().build();
-                URL url = new URL(builtUri.toString());
+                    Uri builtUri = Uri.parse(REDDIT_BASE_URL).buildUpon().build();
+                    URL url = new URL(builtUri.toString());
 
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setRequestMethod("GET");
+                    urlConnection.connect();
 
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
-                if (inputStream == null) {
+                    InputStream inputStream = urlConnection.getInputStream();
+                    StringBuffer buffer = new StringBuffer();
+                    if (inputStream == null) {
+                        return null;
+                    }
+                    reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line + "\n");
+                    }
+
+                    if (buffer.length() == 0) {
+                        return null;
+                    }
+
+
+
+
+                    redditJsonString = buffer.toString();
+                    JSonSaver.saveData(getActivity(), redditJsonString);
+
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "Error: ", e);
                     return null;
-                }
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line + "\n");
-                }
-
-                if (buffer.length() == 0) {
-                    return null;
-                }
-                redditJsonString = buffer.toString();
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "Error: ", e);
-                return null;
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (final IOException e) {
-                        Log.e(LOG_TAG, "Error cerrando el stream: ", e);
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                    if (reader != null) {
+                        try {
+                            reader.close();
+                        } catch (final IOException e) {
+                            Log.e(LOG_TAG, "Error cerrando el stream: ", e);
+                        }
                     }
                 }
+            } else {
+                redditJsonString = JSonSaver.getData(getActivity());
             }
             try {
                 return getRedditDataFromJson(redditJsonString);

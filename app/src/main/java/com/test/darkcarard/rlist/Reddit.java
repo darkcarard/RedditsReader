@@ -10,6 +10,7 @@ import java.util.Arrays;
 public class Reddit implements Serializable{
     private static final String URL = "https://www.reddit.com";
 
+    private String name;
     private String description;
     private long suscribers;
     private String creationDate;
@@ -33,6 +34,15 @@ public class Reddit implements Serializable{
         this.language = language;
         this.over18 = over18;
         this.imageHeader = imageHeader;
+        this.name = url;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {

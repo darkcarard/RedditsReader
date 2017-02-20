@@ -30,7 +30,7 @@ public class RedditItemAdapter extends ArrayAdapter<Reddit> {
         if (reddit != null) {
             TextView tvRedditName = (TextView) convertView.findViewById(R.id.tv_reddit_name);
             TextView tvRedditSubscribers = (TextView) convertView.findViewById(R.id.tv_reddit_subscribers);
-            tvRedditName.setText(reddit.getUrl());
+            tvRedditName.setText(reddit.getName());
             DecimalFormat myDecimalFormat = new DecimalFormat("###,###.###");
             String suscribersStr = myDecimalFormat.format(reddit.getSuscribers());
             tvRedditSubscribers.setText(suscribersStr);

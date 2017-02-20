@@ -9,7 +9,6 @@
         android:id="@+id/tv_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:textSize="18sp"
         android:textColor="@color/colorPrimary"
         android:paddingLeft="20dp"
@@ -17,7 +16,9 @@
         android:textAlignment="center"
         android:textStyle="normal|bold"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp" />
+        android:paddingBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:maxHeight="130dp" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -110,12 +111,13 @@
         android:textStyle="normal|bold"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
-
     <TextView
         android:id="@+id/tv_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/tv_category_label"
+        android:layout_toRightOf="@+id/tv_category_label"
+        android:layout_toEndOf="@+id/tv_category_label"
         android:textColor="@android:color/black"
         android:paddingLeft="20dp" />
 
@@ -127,5 +129,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
         android:id="@+id/button" />
+
 
 </RelativeLayout>

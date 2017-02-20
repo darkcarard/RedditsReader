@@ -1,2 +1,2 @@
 # RedditsReader
-Android app for read Reddit posts. Posts can be read online or offline.
+Android app for list and view Subreddits. You can use the app in online/offline mode Edit
